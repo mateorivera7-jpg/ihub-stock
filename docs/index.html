@@ -545,12 +545,19 @@ async function leerSupabase() {
   if (!productos.length) throw new Error("vacío");
   return { productos: productos.map(p => ({ ...p, precio: Number(p.precio) })), ...estado };
 }
-async function leerDatos() {
-  if (SUPABASE_URL && SUPABASE_KEY) { try { return await leerSupabase(); } catch {} }
+async function leerJSON() {
   for (const url of [DATA_URL, "data/catalogo.json"]) {
     try { const r = await fetch(url + "?t=" + Date.now(), { cache: "no-store" }); if (r.ok) return await r.json(); } catch {}
   }
-  throw new Error("sin datos");
+  throw new Error("sin JSON");
+}
+// Pide Supabase y el JSON a la vez y se queda con el que se revisó más recientemente.
+async function leerDatos() {
+  const fuentes = await Promise.allSettled([SUPABASE_URL && SUPABASE_KEY ? leerSupabase() : Promise.reject(), leerJSON()]);
+  const ok = fuentes.filter(f => f.status === "fulfilled" && f.value?.productos?.length).map(f => f.value);
+  if (!ok.length) throw new Error("sin datos");
+  const fecha = d => Date.parse(d.revisado || d.actualizado) || 0;
+  return ok.reduce((a, b) => fecha(b) > fecha(a) ? b : a);
 }
 /* ---------- Mayoristas (Supabase Auth) ---------- */
 const AUTH = `${SUPABASE_URL}/auth/v1`;
