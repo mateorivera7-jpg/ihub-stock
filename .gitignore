@@ -1,0 +1,7 @@
+venv/
+.venv/
+vista-previa/
+__pycache__/
+.DS_Store
+margenes.json
+.claude/
