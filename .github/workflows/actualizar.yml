@@ -16,18 +16,27 @@ jobs:
   actualizar:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
     steps:
+      - name: Revisar configuración
+        if: env.SUPABASE_SECRET_KEY == ''
+        run: echo "::notice::Falta poner la llave de Supabase en Settings → Secrets → Actions. No se actualiza nada todavía."
       - uses: actions/checkout@v4
+        if: env.SUPABASE_SECRET_KEY != ''
       - uses: actions/setup-python@v5
+        if: env.SUPABASE_SECRET_KEY != ''
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
+        if: env.SUPABASE_SECRET_KEY != ''
       - run: python -m playwright install --with-deps chromium
+        if: env.SUPABASE_SECRET_KEY != ''
       - run: python actualizar.py
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        if: env.SUPABASE_SECRET_KEY != ''
       - name: Guardar cambios
+        if: env.SUPABASE_SECRET_KEY != ''
         run: |
           git config user.name "iHub bot"
           git config user.email "bot@users.noreply.github.com"

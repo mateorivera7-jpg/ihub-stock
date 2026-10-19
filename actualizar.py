@@ -211,6 +211,9 @@ def main():
     if SUPABASE_URL and SUPABASE_KEY:
         MARGENES = margenes_de_supabase()
     if not all(k in MARGENES for k in CATEGORIAS):
+        if not (SUPABASE_URL or SUPABASE_KEY):
+            print("Supabase aún no está configurado (faltan SUPABASE_URL y SUPABASE_SECRET_KEY); no se actualiza nada.")
+            return
         sys.exit("No hay márgenes: configura Supabase (SUPABASE_URL y SUPABASE_SECRET_KEY) o crea margenes.json.")
 
     crudo = leer_fuente()
