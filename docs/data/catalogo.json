@@ -12,16 +12,6 @@
   },
   {
    "lista": "openbox",
-   "modelo": "IPHONE 14 PRO",
-   "categoria": "iphone",
-   "color": "SPACE BLACK",
-   "capacidad": "128GB",
-   "bateria": 85,
-   "sim": "eSIM",
-   "precio": 589.99
-  },
-  {
-   "lista": "openbox",
    "modelo": "IPHONE 14 PRO MAX",
    "categoria": "iphone",
    "color": "DEEP PURPLE",
@@ -301,16 +291,6 @@
    "precio": 819.99
   },
   {
-   "lista": "openbox",
-   "modelo": "SAMSUNG GALAXY S25 ULTRA",
-   "categoria": "android",
-   "color": "TITANIUM WHITESILVER",
-   "capacidad": "512GB",
-   "bateria": 100,
-   "sim": "",
-   "precio": 819.99
-  },
-  {
    "lista": "nuevos",
    "modelo": "IPHONE 15 ACTIVADO",
    "categoria": "iphone",
@@ -435,26 +415,6 @@
    "modelo": "IPHONE 18 PRO MAX",
    "categoria": "iphone",
    "color": "BLACK",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1629.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 18 PRO MAX",
-   "categoria": "iphone",
-   "color": "GLACIER",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1639.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 18 PRO MAX",
-   "categoria": "iphone",
-   "color": "SILVER",
    "capacidad": "256GB",
    "bateria": 100,
    "sim": "eSIM",
@@ -701,6 +661,6 @@
    "precio": 45.0
   }
  ],
- "actualizado": "2026-10-19T00:49:40+00:00",
- "revisado": "2026-10-19T00:49:40+00:00"
+ "actualizado": "2026-10-19T20:21:04+00:00",
+ "revisado": "2026-10-19T20:21:04+00:00"
 }
