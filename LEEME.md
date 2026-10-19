@@ -55,6 +55,18 @@ Si Supabase no responde, usa sola `docs/data/catalogo.json` como respaldo.
 
 Nunca pongas la clave secreta dentro de `docs/` ni la compartas: con ella se puede cambiar todo.
 
+## Mayoristas (precio por mayor)
+
+En la app, el botón **Mayoristas** permite registrarse con nombre, apellido, celular y clave.
+Con la sesión iniciada, la lista muestra el precio por mayor (tabla `productos_mayorista`, que solo ven
+mayoristas registrados y activos; nunca está en el archivo público `catalogo.json`).
+
+- **Márgenes por mayor:** filas `mayor_*` de la tabla `margenes` (iPhone, MacBook, iPad, Android, cubos, palancas, otros).
+  El precio por mayor nunca supera al precio público.
+- **Ver quién se registró / bloquear a alguien:** Supabase → Table Editor → `mayoristas` → `activo = false`.
+- **Instalar (una sola vez):** pega `supabase/mayoristas.sql` en SQL Editor → Run, y en
+  Authentication → Sign In / Providers → Email desactiva **Confirm email** (el usuario es el celular, no un correo real).
+
 ## Cambiar márgenes
 
 Cámbialos en Supabase → Table Editor → `margenes`. Se aplican en la próxima actualización (cada 20 minutos).

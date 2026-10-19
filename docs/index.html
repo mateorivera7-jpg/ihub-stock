@@ -49,6 +49,7 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); -webkit-font-smoothing: antialiased; }
 button, input, select { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--brand-2); outline-offset: 2px; }
@@ -180,6 +181,34 @@ details[open] summary::after { content: "–"; }
 .dbody ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 4px; }
 .dbody .muted { color: var(--muted); font-size: 13px; }
 
+/* Mayoristas */
+.acc-btn { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.45); background: transparent; color: #fff; font: 700 13px var(--display); cursor: pointer; }
+.acc-btn:hover { background: rgba(255,255,255,.12); }
+.acc-btn.on { background: var(--lime); border-color: var(--lime); color: #0A1B33; }
+.modo-mayor { background: var(--lime); color: #0A1B33; padding: 12px 16px 36px; font-size: 14px; }
+.modo-mayor .wrap { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.modo-mayor b { font: 800 14px var(--display); }
+.modo-mayor button { margin-left: auto; border: 1px solid rgba(10,27,51,.35); background: transparent; border-radius: 8px; padding: 4px 12px; font-weight: 700; cursor: pointer; color: #0A1B33; }
+dialog.acceso { border: 0; border-radius: 20px; padding: 0; width: min(420px, calc(100% - 32px)); background: var(--surface); color: var(--ink); box-shadow: 0 30px 60px -20px rgba(4,20,50,.55); }
+dialog.acceso::backdrop { background: rgba(6,14,28,.6); backdrop-filter: blur(3px); }
+.acc-head { background: linear-gradient(135deg, #1B6DFF, #0838A3); color: #fff; padding: 20px 20px 16px; position: relative; }
+.acc-head h2 { margin: 0; font: italic 900 24px/1.1 var(--display); }
+.acc-head p { margin: 6px 0 0; font-size: 13.5px; color: #DCE8FF; }
+.acc-close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(255,255,255,.18); color: #fff; font-size: 18px; cursor: pointer; }
+.acc-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); }
+.acc-tabs button { height: 46px; border: 0; background: transparent; font: 700 14px var(--display); color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; }
+.acc-tabs button[aria-selected="true"] { color: var(--brand); border-bottom-color: var(--brand); }
+.acc-form { padding: 18px 20px 20px; display: grid; gap: 12px; }
+.acc-form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.acc-form label { display: grid; gap: 5px; font-size: 12.5px; font-weight: 700; color: var(--muted); min-width: 0; }
+.acc-form input { height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); padding: 0 12px; font-size: 15px; color: var(--ink); width: 100%; }
+.acc-form input:focus { outline: 2px solid var(--brand); outline-offset: 0; border-color: transparent; }
+.acc-form .submit { height: 46px; border: 0; border-radius: 12px; background: var(--brand); color: #fff; font: 800 15px var(--display); cursor: pointer; }
+.acc-form .submit:disabled { opacity: .6; cursor: wait; }
+.acc-msg { font-size: 13.5px; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--warn) 12%, transparent); color: var(--warn); }
+.acc-msg.ok { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good); }
+.acc-note { font-size: 12px; color: var(--muted); margin: 0; }
+
 footer { background: linear-gradient(135deg, #0A4FD6, #0838A3); color: #E3F0FD; padding: 24px 16px 34px; font-size: 13px; }
 footer .wrap { display: grid; gap: 14px; }
 footer .logo img { width: 140px; }
@@ -204,6 +233,7 @@ footer a { color: #fff; font-weight: 600; }
     <div class="toprow">
       <a class="logo" href="#"><img src="logo-blanco.png" alt="IHUB · Tecnología que enseña" width="900" height="274"></a>
       <div class="live"><span class="dot"></span><span id="updated">Cargando stock…</span></div>
+      <button class="acc-btn" id="acc-btn" type="button">Mayoristas</button>
     </div>
     <div class="perks">
       <span><b>Bodega en Quito</b> · #1 en el país</span>
@@ -212,6 +242,40 @@ footer a { color: #fff; font-weight: 600; }
     </div>
   </div>
 </header>
+
+<div class="modo-mayor" id="modo-mayor" hidden>
+  <div class="wrap"><b>Precios por mayor</b><span id="mayor-hola"></span><button type="button" id="salir">Salir</button></div>
+</div>
+
+<dialog class="acceso" id="acceso" aria-labelledby="acc-titulo">
+  <div class="acc-head">
+    <h2 id="acc-titulo">Acceso mayoristas</h2>
+    <p>Regístrate para ver todo el stock con precio por mayor.</p>
+    <button class="acc-close" type="button" id="acc-cerrar" aria-label="Cerrar">×</button>
+  </div>
+  <div class="acc-tabs" role="tablist">
+    <button type="button" role="tab" id="tab-ingresar" aria-selected="true">Ingresar</button>
+    <button type="button" role="tab" id="tab-registro" aria-selected="false">Registrarme</button>
+  </div>
+  <form class="acc-form" id="form-ingresar" novalidate>
+    <label>Celular<input id="in-cel" type="tel" inputmode="tel" autocomplete="username" placeholder="09XXXXXXXX" required></label>
+    <label>Clave<input id="in-clave" type="password" autocomplete="current-password" required></label>
+    <div class="acc-msg" id="in-msg" hidden></div>
+    <button class="submit" type="submit">Ver precios por mayor</button>
+    <p class="acc-note">¿Olvidaste tu clave? Escríbenos al WhatsApp 0962 608 262.</p>
+  </form>
+  <form class="acc-form" id="form-registro" novalidate hidden>
+    <div class="two">
+      <label>Nombre<input id="re-nombre" autocomplete="given-name" required></label>
+      <label>Apellido<input id="re-apellido" autocomplete="family-name" required></label>
+    </div>
+    <label>Celular (será tu usuario)<input id="re-cel" type="tel" inputmode="tel" autocomplete="tel" placeholder="09XXXXXXXX" required></label>
+    <label>Crea una clave (mínimo 6 caracteres)<input id="re-clave" type="password" autocomplete="new-password" minlength="6" required></label>
+    <label>Repite la clave<input id="re-clave2" type="password" autocomplete="new-password" minlength="6" required></label>
+    <div class="acc-msg" id="re-msg" hidden></div>
+    <button class="submit" type="submit">Crear mi cuenta mayorista</button>
+  </form>
+</dialog>
 
 <section class="hero" id="hero" hidden>
   <div class="hero-card">
@@ -422,7 +486,7 @@ function render() {
   else gs.sort((a, b) => ORDEN.indexOf(catDe(a.cat)) - ORDEN.indexOf(catDe(b.cat))
     || b.modelo.localeCompare(a.modelo, "es", { numeric: true }) || a.lista.localeCompare(b.lista));
 
-  $("summary").textContent = items.length ? `${items.length} equipos en ${gs.length} modelos · toca el botón verde para pedir por WhatsApp` : "";
+  $("summary").textContent = items.length ? `${items.length} equipos en ${gs.length} modelos${MAYOR ? " · precios por mayor" : ""} · toca el botón verde para pedir por WhatsApp` : "";
   $("grid").innerHTML = gs.length ? gs.map(card).join("") :
     `<div class="empty"><b>Sin resultados</b>Prueba con otro modelo o quita los filtros.</div>`;
 }
@@ -450,7 +514,7 @@ function row(g, p) {
       <span class="color"><span class="sw" style="background:${swatch(p.color)}"></span>${esc(p.color || "Único")}</span>
       <span class="specs">${specs.join("")}</span></div>
     <span class="price">${money(p.precio)}</span>
-    <a class="wa-sq" href="${waLink(`Hola iHub, me interesa: ${desc} (${extra}) – ${money(p.precio)}. ¿Está disponible?`)}" target="_blank" rel="noopener" aria-label="Pedir ${esc(desc)} por WhatsApp">${waIcon}</a></li>`;
+    <a class="wa-sq" href="${waLink(MAYOR ? `Hola iHub, soy mayorista (${MAYOR.nombre} ${MAYOR.apellido}, ${MAYOR.celular}). Me interesa: ${desc} (${extra}) – ${money(p.precio)} por mayor. ¿Está disponible?` : `Hola iHub, me interesa: ${desc} (${extra}) – ${money(p.precio)}. ¿Está disponible?`)}" target="_blank" rel="noopener" aria-label="Pedir ${esc(desc)} por WhatsApp">${waIcon}</a></li>`;
 }
 
 $("q").addEventListener("input", e => { state.q = e.target.value; render(); });
@@ -488,9 +552,116 @@ async function leerDatos() {
   }
   throw new Error("sin datos");
 }
+/* ---------- Mayoristas (Supabase Auth) ---------- */
+const AUTH = `${SUPABASE_URL}/auth/v1`;
+const CLAVE_SESION = "ihub-mayorista";
+let SESION = null, MAYOR = null;
+try { SESION = JSON.parse(localStorage.getItem(CLAVE_SESION)); } catch {}
+const guardarSesion = s => { SESION = s; try { s ? localStorage.setItem(CLAVE_SESION, JSON.stringify(s)) : localStorage.removeItem(CLAVE_SESION); } catch {} };
+const normCelular = v => { let d = String(v).replace(/\D/g, ""); if (d.startsWith("593")) d = d.slice(3); if (d.startsWith("0")) d = d.slice(1); return d.length === 9 ? "593" + d : null; };
+const correoDe = cel => `${cel}@mayoristas.ihub.com.ec`;
+const ERRORES = {
+  user_already_exists: "Ese celular ya está registrado. Ingresa con tu clave en la pestaña Ingresar.",
+  invalid_credentials: "Celular o clave incorrectos.",
+  weak_password: "La clave es muy corta: usa al menos 6 caracteres.",
+  email_not_confirmed: "Tu cuenta aún no está activa. Escríbenos por WhatsApp para activarla.",
+  signup_disabled: "Los registros están cerrados por ahora. Escríbenos por WhatsApp.",
+  over_request_rate_limit: "Demasiados intentos. Espera un minuto y vuelve a intentar.",
+};
+async function authPost(ruta, cuerpo, token) {
+  const h = { apikey: SUPABASE_KEY, "Content-Type": "application/json" };
+  if (token) h.Authorization = "Bearer " + token;
+  const r = await fetch(AUTH + ruta, { method: "POST", headers: h, body: JSON.stringify(cuerpo) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) { const e = new Error(j.msg || j.error_description || r.status); e.code = j.error_code || j.error; throw e; }
+  return j;
+}
+const mensajeError = e => ERRORES[e.code] || (/already registered/i.test(e.message) ? ERRORES.user_already_exists
+  : /invalid login/i.test(e.message) ? ERRORES.invalid_credentials : "No se pudo conectar. Revisa tu internet e intenta otra vez.");
+function tomarSesion(j) {
+  if (!j.access_token) return false;
+  guardarSesion({ access_token: j.access_token, refresh_token: j.refresh_token,
+    expires_at: j.expires_at || Math.floor(Date.now() / 1000) + (j.expires_in || 3600), meta: j.user?.user_metadata || {} });
+  return true;
+}
+async function tokenVigente() {
+  if (!SESION) return null;
+  if (SESION.expires_at * 1000 - 60000 > Date.now()) return SESION.access_token;
+  try { tomarSesion({ ...(await authPost("/token?grant_type=refresh_token", { refresh_token: SESION.refresh_token })), user: { user_metadata: SESION.meta } }); return SESION.access_token; }
+  catch { guardarSesion(null); return null; }
+}
+async function leerMayorista() {
+  const token = await tokenVigente();
+  if (!token) return null;
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/productos_mayorista?select=lista,modelo,categoria,color,capacidad,bateria,sim,precio&order=orden`,
+    { headers: { apikey: SUPABASE_KEY, Authorization: "Bearer " + token }, cache: "no-store" });
+  if (r.status === 401) { guardarSesion(null); return null; }
+  if (!r.ok) throw new Error(r.status);
+  return (await r.json()).map(p => ({ ...p, precio: Number(p.precio) }));
+}
+function pintarModo() {
+  $("modo-mayor").hidden = !MAYOR;
+  $("acc-btn").classList.toggle("on", !!MAYOR);
+  $("acc-btn").textContent = MAYOR ? `Mayorista · ${MAYOR.nombre || "mi cuenta"}` : "Mayoristas";
+  if (MAYOR) $("mayor-hola").textContent = `Hola, ${MAYOR.nombre} ${MAYOR.apellido}. Estás viendo el stock con precio por mayor.`;
+}
+function verTab(cual) {
+  const reg = cual === "registro";
+  $("form-registro").hidden = !reg; $("form-ingresar").hidden = reg;
+  $("tab-registro").setAttribute("aria-selected", reg); $("tab-ingresar").setAttribute("aria-selected", !reg);
+}
+function aviso(id, texto, ok) { const el = $(id); el.textContent = texto; el.hidden = !texto; el.classList.toggle("ok", !!ok); }
+$("acc-btn").addEventListener("click", () => { if (MAYOR) { $("modo-mayor").scrollIntoView({ behavior: "smooth" }); return; } verTab("ingresar"); $("acceso").showModal(); });
+$("acc-cerrar").addEventListener("click", () => $("acceso").close());
+$("tab-ingresar").addEventListener("click", () => verTab("ingresar"));
+$("tab-registro").addEventListener("click", () => verTab("registro"));
+$("salir").addEventListener("click", () => {
+  if (SESION) authPost("/logout", {}, SESION.access_token).catch(() => {});
+  guardarSesion(null); MAYOR = null; cargar();
+});
+async function enviar(form, msgId, accion) {
+  const btn = form.querySelector(".submit"); aviso(msgId, "");
+  btn.disabled = true;
+  try { await accion(); $("acceso").close(); form.reset(); await cargar(); }
+  catch (e) { aviso(msgId, e.amigable || mensajeError(e)); }
+  finally { btn.disabled = false; }
+}
+$("form-ingresar").addEventListener("submit", e => {
+  e.preventDefault();
+  enviar(e.target, "in-msg", async () => {
+    const cel = normCelular($("in-cel").value);
+    if (!cel) throw Object.assign(new Error(), { amigable: "Escribe tu celular de 10 dígitos, por ejemplo 0991234567." });
+    if (!$("in-clave").value) throw Object.assign(new Error(), { amigable: "Escribe tu clave." });
+    tomarSesion(await authPost("/token?grant_type=password", { email: correoDe(cel), password: $("in-clave").value }));
+  });
+});
+$("form-registro").addEventListener("submit", e => {
+  e.preventDefault();
+  enviar(e.target, "re-msg", async () => {
+    const nombre = $("re-nombre").value.trim(), apellido = $("re-apellido").value.trim(), cel = normCelular($("re-cel").value);
+    const clave = $("re-clave").value, clave2 = $("re-clave2").value;
+    const falla = t => Object.assign(new Error(), { amigable: t });
+    if (!nombre || !apellido) throw falla("Escribe tu nombre y tu apellido.");
+    if (!cel) throw falla("Escribe tu celular de 10 dígitos, por ejemplo 0991234567.");
+    if (clave.length < 6) throw falla("La clave debe tener al menos 6 caracteres.");
+    if (clave !== clave2) throw falla("Las dos claves no coinciden.");
+    const j = await authPost("/signup", { email: correoDe(cel), password: clave, data: { nombre, apellido, celular: cel } });
+    if (!tomarSesion(j)) throw falla("Tu cuenta quedó creada pero falta activarla. Escríbenos por WhatsApp al 0962 608 262.");
+  });
+});
+
 async function cargar() {
   try {
     const d = await leerDatos();
+    MAYOR = null;
+    if (SESION) {
+      try {
+        const lista = await leerMayorista();
+        if (lista && lista.length) { d.productos = lista; MAYOR = { nombre: SESION.meta.nombre || "", apellido: SESION.meta.apellido || "", celular: SESION.meta.celular || "" }; }
+        else if (lista) aviso("in-msg", "Tu acceso mayorista está pausado. Escríbenos por WhatsApp.");
+      } catch {}
+    }
+    pintarModo();
     DATA = d.productos.map(p => ({ ...p, _txt: [p.modelo, p.color, p.capacidad, LISTAS[p.lista], p.sim].join(" ").toUpperCase() }));
     const visto = d.revisado || d.actualizado;
     $("updated").textContent = hace(visto);
