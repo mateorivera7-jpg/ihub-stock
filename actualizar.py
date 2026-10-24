@@ -204,21 +204,38 @@ def leer_fuente():
         print("Listas encontradas:", listas)
 
         for lista in listas:
-            combo.click()
-            app.get_by_role("option", name=lista, exact=True).click()
-            app.get_by_text(re.compile(rf"^{re.escape(lista)} · \d+ modelos")).wait_for(timeout=60_000)
-            pag.wait_for_timeout(800)
-            tarjetas = app.locator(".item-card")
-            filas = tarjetas.evaluate_all(
-                """els => els.map(e => [
-                    e.querySelector('.item-modelo')?.innerText || '',
-                    e.querySelector('.item-detalle')?.innerText || '',
-                    e.querySelector('.item-precio')?.innerText || ''])"""
-            )
+            filas = leer_lista(pag, app, combo, lista)
             print(f"  {lista}: {len(filas)} productos")
             crudo += [(lista, *f) for f in filas if f[0] and f[2]]
         nav.close()
     return crudo, noticias
+
+
+def leer_lista(pag, app, combo, lista, intentos=4):
+    """Abre una lista y espera a que estén TODAS sus tarjetas (las que dice "· N modelos").
+    Si no cuadran después de varios intentos, aborta para no publicar un stock incompleto."""
+    for intento in range(1, intentos + 1):
+        combo.click()
+        app.get_by_role("option", name=lista, exact=True).click()
+        cabecera = app.get_by_text(re.compile(rf"^{re.escape(lista)} · \d+ modelos"))
+        cabecera.wait_for(timeout=60_000)
+        esperado = int(re.search(r"· (\d+) modelos", cabecera.inner_text()).group(1))
+        tarjetas = app.locator(".item-card")
+        for _ in range(40):  # hasta ~20 s a que se dibujen todas
+            if tarjetas.count() == esperado:
+                break
+            pag.wait_for_timeout(500)
+        filas = tarjetas.evaluate_all(
+            """els => els.map(e => [
+                e.querySelector('.item-modelo')?.innerText || '',
+                e.querySelector('.item-detalle')?.innerText || '',
+                e.querySelector('.item-precio')?.innerText || ''])"""
+        )
+        if len(filas) == esperado:
+            return filas
+        print(f"  {lista}: leí {len(filas)} de {esperado}; reintento {intento}/{intentos}…")
+        pag.wait_for_timeout(2000)
+    sys.exit(f"{lista}: no se pudieron leer los {esperado} productos; no se publica nada para no dejar el stock incompleto.")
 
 
 def leer_noticias(app):
