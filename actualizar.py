@@ -24,11 +24,14 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-FUENTE = "https://mundocelularecdistribucion.streamlit.app/"
+FUENTE = "https://mcdistribucion.streamlit.app/"
 RAIZ = Path(__file__).resolve().parent
 SALIDA = RAIZ / "docs" / "data" / "catalogo.json"
 _ARCHIVO_MARGENES = RAIZ / "margenes.json"  # privado: no se sube a GitHub (ver .gitignore)
 MARGENES = json.loads(_ARCHIVO_MARGENES.read_text(encoding="utf-8")) if _ARCHIVO_MARGENES.exists() else {}
+if os.environ.get("MARGENES_JSON"):  # en GitHub Actions: secreto con el contenido de margenes.json
+    MARGENES = json.loads(os.environ["MARGENES_JSON"])
+DIAS_NUEVO = 7  # cuántos días un producto recién llegado lleva la etiqueta "Nuevo"
 CATEGORIAS = ("iphone", "macbook_ultima_generacion", "macbook_anterior", "ipad",
               "android", "cubos", "palancas", "otros")
 CATEGORIAS_MAYOR = tuple(f"mayor_{c}" for c in ("iphone", "macbook", "ipad", "android", "cubos", "palancas", "otros"))
@@ -190,6 +193,9 @@ def leer_fuente():
         app = pag.frame_locator("iframe[title='streamlitApp'], iframe").first
         combo = app.get_by_role("combobox").first
         combo.wait_for(timeout=180_000)
+        pag.wait_for_timeout(1500)
+        noticias = leer_noticias(app)
+        print("Noticias:", noticias or "ninguna")
 
         combo.click()
         opciones = [o.strip() for o in app.get_by_role("option").all_inner_texts()]
@@ -212,7 +218,41 @@ def leer_fuente():
             print(f"  {lista}: {len(filas)} productos")
             crudo += [(lista, *f) for f in filas if f[0] and f[2]]
         nav.close()
-    return crudo
+    return crudo, noticias
+
+
+def leer_noticias(app):
+    """Lee el recuadro NOTICIAS de la lista origen: {"titulo": ..., "items": [...]} o None."""
+    textos = app.locator("[data-testid='stMarkdownContainer']").all_inner_texts()
+    bloque = next((t for t in textos if t.strip().upper().startswith("NOTICIAS")), "")
+    lineas = [re.sub(r"\s+", " ", l).strip(" |") for l in bloque.splitlines()]
+    lineas = [l for l in lineas if l]
+    if not lineas:
+        return None
+    lineas[0] = re.sub(r"^NOTICIAS\s*:?\s*", "", lineas[0], flags=re.I)
+    if not lineas[0]:
+        lineas = lineas[1:]
+    if not lineas:
+        return None
+    return {"titulo": lineas[0], "items": lineas[1:]}
+
+
+def clave(p):
+    return f'{p["lista"]}|{p["modelo"]}|{p["color"]}|{p["capacidad"]}'
+
+
+def calcular_ingresos(productos, anterior, ahora):
+    """Productos que no estaban en la lista anterior; se recuerdan DIAS_NUEVO días mientras sigan en stock."""
+    previos = {clave(p) for p in anterior.get("productos", [])}
+    vigentes = {i["clave"]: i["desde"] for i in anterior.get("ingresos", [])}
+    limite = datetime.fromisoformat(ahora).timestamp() - DIAS_NUEVO * 86400
+    ingresos = []
+    for p in productos:
+        k = clave(p)
+        desde = vigentes.get(k) or (ahora if previos and k not in previos else None)
+        if desde and datetime.fromisoformat(desde).timestamp() >= limite and k not in {i["clave"] for i in ingresos}:
+            ingresos.append({"clave": k, "desde": desde})
+    return ingresos
 
 
 def main():
@@ -225,7 +265,7 @@ def main():
             return
         sys.exit("No hay márgenes: configura Supabase (SUPABASE_URL y SUPABASE_SECRET_KEY) o crea margenes.json.")
 
-    crudo = leer_fuente()
+    crudo, noticias = leer_fuente()
     if len(crudo) < 5:
         sys.exit(f"Solo se leyeron {len(crudo)} productos; no se reemplaza el catálogo actual.")
 
@@ -243,9 +283,12 @@ def main():
     cambio = anterior.get("productos") != productos
     nuevo["actualizado"] = ahora if cambio else anterior.get("actualizado", ahora)
     nuevo["revisado"] = ahora  # última vez que se comparó con la lista origen
+    nuevo["noticias"] = noticias
+    nuevo["ingresos"] = calcular_ingresos(productos, anterior, ahora)
     SALIDA.parent.mkdir(parents=True, exist_ok=True)
     SALIDA.write_text(json.dumps(nuevo, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"Catálogo actualizado: {len(productos)} productos." if cambio else "Sin cambios en el stock (revisado).")
+    print(f"Recién llegados (últimos {DIAS_NUEVO} días): {len(nuevo['ingresos'])}")
 
     if SUPABASE_URL and SUPABASE_KEY:
         r = supabase("rpc/publicar_catalogo", {"productos": productos, "revisado": ahora})

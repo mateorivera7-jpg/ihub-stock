@@ -5,7 +5,7 @@ Se actualiza sola leyendo la lista de distribuidores y sumando el margen de iHub
 
 ## Cómo funciona
 
-1. `actualizar.py` abre https://mundocelularecdistribucion.streamlit.app/, lee todas sus listas
+1. `actualizar.py` abre https://mcdistribucion.streamlit.app/, lee todas sus listas
    (Openbox, Teléfonos nuevos, Gadgets y cualquier lista nueva que aparezca).
 2. Suma el margen de iHub a cada producto (los montos son privados: están en la tabla `margenes` de Supabase).
 3. Guarda `docs/data/catalogo.json` (solo precios finales; nunca el costo).
@@ -54,6 +54,19 @@ Si Supabase no responde, usa sola `docs/data/catalogo.json` como respaldo.
 3. Actions → Actualizar stock → Run workflow. En el registro debe salir `Supabase: actualizado` o `Supabase: sin cambios`.
 
 Nunca pongas la clave secreta dentro de `docs/` ni la compartas: con ella se puede cambiar todo.
+
+## Noticias y recién llegados
+
+- **Noticias:** la app copia el recuadro NOTICIAS de la lista origen (por ejemplo "Disponibles entrega inmediata…").
+- **Recién llegados:** cada producto que aparece y no estaba en la revisión anterior lleva la etiqueta **Nuevo**
+  durante 7 días (`DIAS_NUEVO` en `actualizar.py`). La campanita de arriba muestra cuántos no ha visto cada persona
+  y la pestaña "Recién llegados" los filtra.
+
+## Actualización automática en GitHub (una sola vez)
+
+GitHub → Settings → Secrets and variables → Actions → **New repository secret**:
+- `MARGENES_JSON` = el contenido de tu `margenes.json` (en una sola línea). Con esto se actualiza cada 20 min.
+- Opcional, para Supabase y mayoristas: `SUPABASE_URL` y `SUPABASE_SECRET_KEY`.
 
 ## Mayoristas (precio por mayor)
 

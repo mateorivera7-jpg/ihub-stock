@@ -181,6 +181,26 @@ details[open] summary::after { content: "–"; }
 .dbody ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 4px; }
 .dbody .muted { color: var(--muted); font-size: 13px; }
 
+/* Noticias y recién llegados */
+.bell { position: relative; width: 36px; height: 34px; border-radius: 999px; border: 1px solid rgba(255,255,255,.45); background: transparent; color: #fff; display: grid; place-items: center; cursor: pointer; }
+.bell svg { width: 18px; height: 18px; }
+.bell b { position: absolute; top: -6px; right: -6px; min-width: 19px; height: 19px; padding: 0 5px; border-radius: 999px; background: #FF3B3B; color: #fff; font: 800 11px/19px var(--display); box-shadow: 0 0 0 2px #0A4FD6; }
+.news { padding: 18px 16px 0; }
+.news-card { max-width: 1120px; margin: 0 auto; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: grid; gap: 10px; }
+.news-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.news-pill { font: 800 11px var(--display); letter-spacing: .14em; text-transform: uppercase; color: #fff; background: #FF3B3B; padding: 4px 9px; border-radius: 6px; }
+.news-title { font: italic 900 18px/1.15 var(--display); margin: 0; }
+.news-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.news-items li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-weight: 600; font-size: 14px; }
+.news-items li span { font: 500 12px var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px; }
+.news-cta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.news-cta .btn { height: 40px; font-size: 13.5px; }
+.btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); }
+.tab.nuevo[aria-pressed="false"] { border-color: #FF3B3B; color: #FF3B3B; }
+.tab.nuevo[aria-pressed="true"] { background: #FF3B3B; border-color: #FF3B3B; }
+.new-tag { font: 800 10px var(--display); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: #FF3B3B; padding: 2px 6px; border-radius: 5px; }
+@media (min-width: 760px) { .news { padding: 18px 24px 0; } }
+
 /* Mayoristas */
 .acc-btn { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.45); background: transparent; color: #fff; font: 700 13px var(--display); cursor: pointer; }
 .acc-btn:hover { background: rgba(255,255,255,.12); }
@@ -233,6 +253,7 @@ footer a { color: #fff; font-weight: 600; }
     <div class="toprow">
       <a class="logo" href="#"><img src="logo-blanco.png" alt="IHUB · Tecnología que enseña" width="900" height="274"></a>
       <div class="live"><span class="dot"></span><span id="updated">Cargando stock…</span></div>
+      <button class="bell" id="bell" type="button" aria-label="Recién llegados" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><b id="bell-n" hidden></b></button>
       <button class="acc-btn" id="acc-btn" type="button">Mayoristas</button>
     </div>
     <div class="perks">
@@ -290,6 +311,17 @@ footer a { color: #fff; font-weight: 600; }
       </div>
     </div>
     <div class="hero-art" id="hero-art" hidden></div>
+  </div>
+</section>
+
+<section class="news" id="noticias" hidden>
+  <div class="news-card">
+    <div class="news-top"><span class="news-pill">Noticias</span><h2 class="news-title" id="news-title"></h2></div>
+    <ul class="news-items" id="news-items"></ul>
+    <div class="news-cta">
+      <a class="btn wa" id="news-wa" target="_blank" rel="noopener" href="#"></a>
+      <button class="btn ghost" type="button" id="news-ver" hidden></button>
+    </div>
   </div>
 </section>
 
@@ -452,21 +484,22 @@ $("hero-ver").addEventListener("click", () => {
 function filtrados(ignorar) {
   const q = state.q.trim().toUpperCase().split(/\s+/).filter(Boolean);
   return DATA.filter(p =>
-    (ignorar === "lista" || state.lista === "todo" || p.lista === state.lista) &&
+    (ignorar === "lista" || state.lista === "todo" || (state.lista === "nuevo" ? p._nuevo : p.lista === state.lista)) &&
     (ignorar === "cat" || state.cat === "todo" || catDe(p.categoria) === state.cat) &&
     q.every(t => p._txt.includes(t)));
 }
 
 function tabs(el, opciones, actual, onPick) {
   el.innerHTML = opciones.map(([k, label, n]) =>
-    `<button class="tab" type="button" data-k="${k}" aria-pressed="${k === actual}">${esc(label)}<small>${n}</small></button>`).join("");
+    `<button class="tab${k === "nuevo" ? " nuevo" : ""}" type="button" data-k="${k}" aria-pressed="${k === actual}">${esc(label)}<small>${n}</small></button>`).join("");
   el.onclick = e => { const b = e.target.closest(".tab"); if (b) onPick(b.dataset.k); };
 }
 
 function render() {
   const porLista = filtrados("lista"), porCat = filtrados("cat");
   const claves = [...Object.keys(LISTAS), ...new Set(DATA.map(p => p.lista).filter(k => !LISTAS[k]))].filter(k => DATA.some(p => p.lista === k));
-  tabs($("listas"), [["todo", "Todo", porLista.length], ...claves.map(k => [k, LISTAS[k] || k, porLista.filter(p => p.lista === k).length])],
+  const nNuevo = porLista.filter(p => p._nuevo).length;
+  tabs($("listas"), [["todo", "Todo", porLista.length], ...(nNuevo ? [["nuevo", "Recién llegados", nNuevo]] : []), ...claves.map(k => [k, LISTAS[k] || k, porLista.filter(p => p.lista === k).length])],
     state.lista, k => { state.lista = k; store.set("lista", k); render(); });
   const cats = Object.keys(CATS).map(k => [k, CATS[k], porCat.filter(p => catDe(p.categoria) === k).length]).filter(c => c[2] > 0);
   $("cats").hidden = cats.length < 2;
@@ -511,7 +544,7 @@ function row(g, p) {
   const desc = [g.modelo, p.capacidad, p.color].filter(Boolean).join(" ");
   const extra = [LISTAS[g.lista], p.bateria != null ? `batería ${p.bateria}%` : ""].filter(Boolean).join(", ");
   return `<li class="row"><div class="var">
-      <span class="color"><span class="sw" style="background:${swatch(p.color)}"></span>${esc(p.color || "Único")}</span>
+      <span class="color"><span class="sw" style="background:${swatch(p.color)}"></span>${esc(p.color || "Único")}${p._nuevo ? ' <span class="new-tag">Nuevo</span>' : ""}</span>
       <span class="specs">${specs.join("")}</span></div>
     <span class="price">${money(p.precio)}</span>
     <a class="wa-sq" href="${waLink(MAYOR ? `Hola iHub, soy mayorista (${MAYOR.nombre} ${MAYOR.apellido}, ${MAYOR.celular}). Me interesa: ${desc} (${extra}) – ${money(p.precio)} por mayor. ¿Está disponible?` : `Hola iHub, me interesa: ${desc} (${extra}) – ${money(p.precio)}. ¿Está disponible?`)}" target="_blank" rel="noopener" aria-label="Pedir ${esc(desc)} por WhatsApp">${waIcon}</a></li>`;
@@ -557,8 +590,44 @@ async function leerDatos() {
   const ok = fuentes.filter(f => f.status === "fulfilled" && f.value?.productos?.length).map(f => f.value);
   if (!ok.length) throw new Error("sin datos");
   const fecha = d => Date.parse(d.revisado || d.actualizado) || 0;
-  return ok.reduce((a, b) => fecha(b) > fecha(a) ? b : a);
+  const elegido = ok.reduce((a, b) => fecha(b) > fecha(a) ? b : a);
+  const json = fuentes[1].status === "fulfilled" ? fuentes[1].value : {};
+  return { ...elegido, noticias: json.noticias || null, ingresos: json.ingresos || [] };
 }
+/* ---------- Noticias y recién llegados ---------- */
+const CLAVE_VISTO = "ihub-visto";
+function renderNoticias(n, productos) {
+  const items = n?.items || [];
+  $("noticias").hidden = !n?.titulo && !items.length;
+  if (n) {
+    $("news-title").textContent = n.titulo || "";
+    $("news-items").innerHTML = items.map(l => {
+      const [modelo, ...resto] = l.split("|").map(x => x.trim()).filter(Boolean);
+      return `<li>${esc(modelo)}${resto.map(r => `<span>${esc(r)}</span>`).join("")}</li>`;
+    }).join("");
+    $("news-wa").innerHTML = waIcon + "Consultar disponibilidad";
+    $("news-wa").href = waLink(`Hola iHub, vi en noticias: ${[n.titulo, ...items].filter(Boolean).join(" · ")}. ¿Me das más información?`);
+  }
+  const nuevos = productos.filter(p => p._nuevo);
+  $("news-ver").hidden = !nuevos.length;
+  $("news-ver").textContent = `Ver ${nuevos.length} recién llegados`;
+  if (!n && nuevos.length) { $("noticias").hidden = false; $("news-title").textContent = "Mercadería nueva"; $("news-items").innerHTML = ""; $("news-wa").hidden = true; }
+  else $("news-wa").hidden = false;
+  let visto = 0; try { visto = Number(localStorage.getItem(CLAVE_VISTO)) || 0; } catch {}
+  const sinVer = new Set(nuevos.filter(p => Date.parse(p._desde) > visto).map(p => p.modelo + p.color + p.capacidad)).size;
+  $("bell").hidden = !nuevos.length;
+  $("bell-n").hidden = !sinVer;
+  $("bell-n").textContent = sinVer > 99 ? "99+" : sinVer;
+}
+function verRecienLlegados() {
+  state.lista = "nuevo"; state.cat = "todo"; state.q = ""; $("q").value = ""; render();
+  try { localStorage.setItem(CLAVE_VISTO, String(Date.now())); } catch {}
+  $("bell-n").hidden = true;
+  $("catalogo").scrollIntoView({ behavior: "smooth" });
+}
+$("bell").addEventListener("click", verRecienLlegados);
+$("news-ver").addEventListener("click", verRecienLlegados);
+
 /* ---------- Mayoristas (Supabase Auth) ---------- */
 const AUTH = `${SUPABASE_URL}/auth/v1`;
 const CLAVE_SESION = "ihub-mayorista";
@@ -669,11 +738,14 @@ async function cargar() {
       } catch {}
     }
     pintarModo();
+    const llegados = new Map((d.ingresos || []).map(i => [i.clave, i.desde]));
+    d.productos.forEach(p => { p._desde = llegados.get(`${p.lista}|${p.modelo}|${p.color}|${p.capacidad}`) || null; p._nuevo = !!p._desde; });
+    renderNoticias(d.noticias, d.productos);
     DATA = d.productos.map(p => ({ ...p, _txt: [p.modelo, p.color, p.capacidad, LISTAS[p.lista], p.sim].join(" ").toUpperCase() }));
     const visto = d.revisado || d.actualizado;
     $("updated").textContent = hace(visto);
     $("updated").title = "Precios cambiados por última vez: " + new Date(d.actualizado).toLocaleString("es-EC");
-    if (state.lista !== "todo" && !DATA.some(p => p.lista === state.lista)) state.lista = "todo";
+    if (state.lista !== "todo" && !DATA.some(p => state.lista === "nuevo" ? p._nuevo : p.lista === state.lista)) state.lista = "todo";
     renderHero();
     render();
   } catch (e) {
