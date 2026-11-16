@@ -4,31 +4,81 @@
    "lista": "openbox",
    "modelo": "IPHONE 14",
    "categoria": "iphone",
-   "color": "PURPLE",
+   "color": "MIDNIGHT",
    "capacidad": "128GB",
-   "bateria": 75,
+   "bateria": 89,
    "sim": "eSIM",
-   "precio": 459.99
+   "precio": 469.99
   },
   {
    "lista": "openbox",
    "modelo": "IPHONE 14",
    "categoria": "iphone",
-   "color": "RED",
-   "capacidad": "128GB",
-   "bateria": 84,
-   "sim": "eSIM",
-   "precio": 459.99
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 14 PLUS",
-   "categoria": "iphone",
-   "color": "MIDNIGHT",
+   "color": "PURPLE",
    "capacidad": "128GB",
    "bateria": 83,
    "sim": "eSIM",
-   "precio": 499.99
+   "precio": 469.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 14",
+   "categoria": "iphone",
+   "color": "STARLIGHT",
+   "capacidad": "128GB",
+   "bateria": 83,
+   "sim": "eSIM",
+   "precio": 469.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 14 PRO",
+   "categoria": "iphone",
+   "color": "SPACE BLACK",
+   "capacidad": "128GB",
+   "bateria": 82,
+   "sim": "eSIM",
+   "precio": 589.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 14 PRO",
+   "categoria": "iphone",
+   "color": "DEEP PURPLE",
+   "capacidad": "256GB",
+   "bateria": 77,
+   "sim": "eSIM",
+   "precio": 609.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 14 PRO",
+   "categoria": "iphone",
+   "color": "SPACE BLACK",
+   "capacidad": "256GB",
+   "bateria": 73,
+   "sim": "eSIM",
+   "precio": 609.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 14 PRO MAX",
+   "categoria": "iphone",
+   "color": "DEEP PURPLE",
+   "capacidad": "256GB",
+   "bateria": 73,
+   "sim": "eSIM",
+   "precio": 659.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 15",
+   "categoria": "iphone",
+   "color": "BLACK",
+   "capacidad": "128GB",
+   "bateria": 83,
+   "sim": "eSIM",
+   "precio": 589.99
   },
   {
    "lista": "openbox",
@@ -42,21 +92,11 @@
   },
   {
    "lista": "openbox",
-   "modelo": "IPHONE 15",
-   "categoria": "iphone",
-   "color": "BLACK",
-   "capacidad": "256GB",
-   "bateria": 81,
-   "sim": "eSIM",
-   "precio": 629.99
-  },
-  {
-   "lista": "openbox",
    "modelo": "IPHONE 15 PLUS",
    "categoria": "iphone",
    "color": "PINK",
    "capacidad": "128GB",
-   "bateria": 76,
+   "bateria": 86,
    "sim": "eSIM",
    "precio": 649.99
   },
@@ -64,26 +104,6 @@
    "lista": "openbox",
    "modelo": "IPHONE 15 PRO",
    "categoria": "iphone",
-   "color": "BLACK TITANIUM",
-   "capacidad": "128GB",
-   "bateria": 85,
-   "sim": "eSIM",
-   "precio": 715.0
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 15 PRO",
-   "categoria": "iphone",
-   "color": "BLUE TITANIUM",
-   "capacidad": "128GB",
-   "bateria": 87,
-   "sim": "eSIM",
-   "precio": 715.0
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 15 PRO",
-   "categoria": "iphone",
    "color": "NATURAL TITANIUM",
    "capacidad": "128GB",
    "bateria": 82,
@@ -96,7 +116,7 @@
    "categoria": "iphone",
    "color": "WHITE TITANIUM",
    "capacidad": "128GB",
-   "bateria": 78,
+   "bateria": 81,
    "sim": "eSIM",
    "precio": 715.0
   },
@@ -104,71 +124,21 @@
    "lista": "openbox",
    "modelo": "IPHONE 15 PRO",
    "categoria": "iphone",
-   "color": "BLACK TITANIUM",
+   "color": "NATURAL TITANIUM",
    "capacidad": "256GB",
-   "bateria": 80,
+   "bateria": 86,
    "sim": "eSIM",
-   "precio": 745.0
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 15 PRO",
-   "categoria": "iphone",
-   "color": "BLUE TITANIUM",
-   "capacidad": "256GB",
-   "bateria": 78,
-   "sim": "eSIM",
-   "precio": 745.0
+   "precio": 750.0
   },
   {
    "lista": "openbox",
    "modelo": "IPHONE 15 PRO",
    "categoria": "iphone",
    "color": "NATURAL TITANIUM",
-   "capacidad": "256GB",
-   "bateria": 80,
-   "sim": "eSIM",
-   "precio": 750.0
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 15 PRO",
-   "categoria": "iphone",
-   "color": "WHITE TITANIUM",
-   "capacidad": "256GB",
-   "bateria": 80,
-   "sim": "eSIM",
-   "precio": 750.0
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 15 PRO",
-   "categoria": "iphone",
-   "color": "BLUE TITANIUM",
    "capacidad": "512GB",
-   "bateria": 79,
+   "bateria": 84,
    "sim": "eSIM",
    "precio": 770.0
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 15 PRO MAX",
-   "categoria": "iphone",
-   "color": "BLACK TITANIUM",
-   "capacidad": "256GB",
-   "bateria": 85,
-   "sim": "eSIM",
-   "precio": 829.99
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 15 PRO MAX",
-   "categoria": "iphone",
-   "color": "NATURAL TITANIUM",
-   "capacidad": "256GB",
-   "bateria": 82,
-   "sim": "eSIM",
-   "precio": 829.99
   },
   {
    "lista": "openbox",
@@ -176,7 +146,17 @@
    "categoria": "iphone",
    "color": "BLACK",
    "capacidad": "128GB",
-   "bateria": 90,
+   "bateria": 93,
+   "sim": "eSIM",
+   "precio": 779.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 16",
+   "categoria": "iphone",
+   "color": "PINK",
+   "capacidad": "128GB",
+   "bateria": 85,
    "sim": "eSIM",
    "precio": 779.99
   },
@@ -186,29 +166,9 @@
    "categoria": "iphone",
    "color": "TEAL",
    "capacidad": "128GB",
-   "bateria": 88,
+   "bateria": 87,
    "sim": "eSIM",
    "precio": 779.99
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 16",
-   "categoria": "iphone",
-   "color": "ULTRAMARINE",
-   "capacidad": "128GB",
-   "bateria": 99,
-   "sim": "eSIM",
-   "precio": 779.99
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 16",
-   "categoria": "iphone",
-   "color": "ULTRAMARINE",
-   "capacidad": "256GB",
-   "bateria": 79,
-   "sim": "eSIM",
-   "precio": 799.99
   },
   {
    "lista": "openbox",
@@ -226,7 +186,7 @@
    "categoria": "iphone",
    "color": "PINK",
    "capacidad": "128GB",
-   "bateria": 93,
+   "bateria": 94,
    "sim": "eSIM",
    "precio": 765.0
   },
@@ -249,26 +209,6 @@
    "bateria": 90,
    "sim": "eSIM",
    "precio": 765.0
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 16 PLUS",
-   "categoria": "iphone",
-   "color": "ULTRAMARINE",
-   "capacidad": "128GB",
-   "bateria": 92,
-   "sim": "eSIM",
-   "precio": 769.99
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 16 PRO",
-   "categoria": "iphone",
-   "color": "BLACK TITANIUM",
-   "capacidad": "128GB",
-   "bateria": 92,
-   "sim": "eSIM",
-   "precio": 865.0
   },
   {
    "lista": "openbox",
@@ -282,33 +222,43 @@
   },
   {
    "lista": "openbox",
-   "modelo": "IPHONE 16 PRO MAX",
+   "modelo": "IPHONE 16 PRO",
    "categoria": "iphone",
    "color": "BLACK TITANIUM",
    "capacidad": "256GB",
-   "bateria": 95,
+   "bateria": 89,
    "sim": "eSIM",
-   "precio": 989.99
+   "precio": 879.99
   },
   {
    "lista": "openbox",
-   "modelo": "IPHONE 16 PRO MAX",
+   "modelo": "IPHONE 16 PRO",
    "categoria": "iphone",
    "color": "WHITE TITANIUM",
    "capacidad": "256GB",
-   "bateria": 90,
+   "bateria": 89,
    "sim": "eSIM",
-   "precio": 989.99
+   "precio": 879.99
   },
   {
    "lista": "openbox",
-   "modelo": "IPHONE 16E",
+   "modelo": "IPHONE 16 PRO",
    "categoria": "iphone",
-   "color": "BLACK",
-   "capacidad": "128GB",
-   "bateria": 100,
+   "color": "BLACK TITANIUM",
+   "capacidad": "512GB",
+   "bateria": 85,
    "sim": "eSIM",
-   "precio": 525.0
+   "precio": 899.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 16 PRO",
+   "categoria": "iphone",
+   "color": "WHITE TITANIUM",
+   "capacidad": "512GB",
+   "bateria": 87,
+   "sim": "eSIM",
+   "precio": 899.99
   },
   {
    "lista": "openbox",
@@ -322,9 +272,49 @@
   },
   {
    "lista": "openbox",
+   "modelo": "IPHONE 17 AIR",
+   "categoria": "iphone",
+   "color": "LIGHT GOLD",
+   "capacidad": "256GB",
+   "bateria": 89,
+   "sim": "eSIM",
+   "precio": 929.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 17 AIR",
+   "categoria": "iphone",
+   "color": "SPACE BLACK",
+   "capacidad": "256GB",
+   "bateria": 91,
+   "sim": "eSIM",
+   "precio": 929.99
+  },
+  {
+   "lista": "openbox",
    "modelo": "IPHONE 17",
    "categoria": "iphone",
    "color": "BLACK",
+   "capacidad": "256GB",
+   "bateria": 95,
+   "sim": "eSIM",
+   "precio": 895.0
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 17",
+   "categoria": "iphone",
+   "color": "LAVENDER",
+   "capacidad": "256GB",
+   "bateria": 91,
+   "sim": "eSIM",
+   "precio": 895.0
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 17",
+   "categoria": "iphone",
+   "color": "MIST BLUE",
    "capacidad": "256GB",
    "bateria": 100,
    "sim": "eSIM",
@@ -336,7 +326,7 @@
    "categoria": "iphone",
    "color": "SAGE",
    "capacidad": "256GB",
-   "bateria": 93,
+   "bateria": 94,
    "sim": "eSIM",
    "precio": 895.0
   },
@@ -354,11 +344,21 @@
    "lista": "openbox",
    "modelo": "IPHONE 17 PRO",
    "categoria": "iphone",
-   "color": "DEEP BLUE",
+   "color": "SILVER",
    "capacidad": "256GB",
-   "bateria": 100,
+   "bateria": 90,
    "sim": "eSIM",
-   "precio": 1149.99
+   "precio": 1129.99
+  },
+  {
+   "lista": "openbox",
+   "modelo": "IPHONE 17 PRO",
+   "categoria": "iphone",
+   "color": "SILVER",
+   "capacidad": "256GB",
+   "bateria": 91,
+   "sim": "eSIM",
+   "precio": 1169.99
   },
   {
    "lista": "openbox",
@@ -366,29 +366,9 @@
    "categoria": "iphone",
    "color": "SILVER",
    "capacidad": "512GB",
-   "bateria": 97,
+   "bateria": 100,
    "sim": "eSIM",
    "precio": 1259.99
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 17 PRO MAX",
-   "categoria": "iphone",
-   "color": "COSMIC ORANGE",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1229.99
-  },
-  {
-   "lista": "openbox",
-   "modelo": "IPHONE 17 PRO MAX",
-   "categoria": "iphone",
-   "color": "DEEP BLUE",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1229.99
   },
   {
    "lista": "openbox",
@@ -416,7 +396,7 @@
    "categoria": "android",
    "color": "LAVENDER",
    "capacidad": "512GB",
-   "bateria": 90,
+   "bateria": 91,
    "sim": "",
    "precio": 539.99
   },
@@ -436,16 +416,6 @@
    "categoria": "android",
    "color": "COBALT VIOLET",
    "capacidad": "256GB",
-   "bateria": 95,
-   "sim": "",
-   "precio": 469.99
-  },
-  {
-   "lista": "openbox",
-   "modelo": "SAMSUNG GALAXY S24 PLUS",
-   "categoria": "android",
-   "color": "ONYX BLACK",
-   "capacidad": "256GB",
    "bateria": 96,
    "sim": "",
    "precio": 469.99
@@ -454,19 +424,9 @@
    "lista": "openbox",
    "modelo": "SAMSUNG GALAXY S24 ULTRA",
    "categoria": "android",
-   "color": "TITANIUM BLACK",
-   "capacidad": "512GB",
-   "bateria": 93,
-   "sim": "",
-   "precio": 689.99
-  },
-  {
-   "lista": "openbox",
-   "modelo": "SAMSUNG GALAXY S24 ULTRA",
-   "categoria": "android",
    "color": "TITANIUM VIOLET",
    "capacidad": "512GB",
-   "bateria": 90,
+   "bateria": 94,
    "sim": "",
    "precio": 689.99
   },
@@ -486,99 +446,39 @@
    "categoria": "android",
    "color": "TITANIUM BLACK",
    "capacidad": "512GB",
-   "bateria": 96,
+   "bateria": 97,
    "sim": "",
    "precio": 819.99
   },
   {
    "lista": "nuevos",
-   "modelo": "IPHONE 15 ACTIVADO",
+   "modelo": "IPHONE 16",
    "categoria": "iphone",
    "color": "BLACK",
    "capacidad": "128GB",
    "bateria": 100,
    "sim": "Chip físico",
-   "precio": 715.0
+   "precio": 889.99
   },
   {
    "lista": "nuevos",
-   "modelo": "IPHONE 15 ACTIVADO",
+   "modelo": "IPHONE 16",
    "categoria": "iphone",
-   "color": "BLUE",
+   "color": "ULTRAMARINE",
    "capacidad": "128GB",
    "bateria": 100,
    "sim": "Chip físico",
-   "precio": 715.0
+   "precio": 889.99
   },
   {
    "lista": "nuevos",
-   "modelo": "IPHONE 16 ACTIVADO",
-   "categoria": "iphone",
-   "color": "BLACK",
-   "capacidad": "128GB",
-   "bateria": 100,
-   "sim": "Chip físico",
-   "precio": 845.0
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 16 ACTIVADO",
-   "categoria": "iphone",
-   "color": "TEAL",
-   "capacidad": "128GB",
-   "bateria": 100,
-   "sim": "Chip físico",
-   "precio": 845.0
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 17 ACTIVADO",
-   "categoria": "iphone",
-   "color": "BLACK",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "Chip físico",
-   "precio": 1019.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 17 ACTIVADO",
-   "categoria": "iphone",
-   "color": "LAVENDER",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "Chip físico",
-   "precio": 1019.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 17 ACTIVADO",
-   "categoria": "iphone",
-   "color": "MIST BLUE",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "Chip físico",
-   "precio": 1019.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 17 ACTIVADO",
-   "categoria": "iphone",
-   "color": "SAGE",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "Chip físico",
-   "precio": 1019.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 17 ACTIVADO",
+   "modelo": "IPHONE 16",
    "categoria": "iphone",
    "color": "WHITE",
-   "capacidad": "256GB",
+   "capacidad": "128GB",
    "bateria": 100,
    "sim": "Chip físico",
-   "precio": 1019.99
+   "precio": 889.99
   },
   {
    "lista": "nuevos",
@@ -588,157 +488,77 @@
    "capacidad": "256GB",
    "bateria": 100,
    "sim": "eSIM",
-   "precio": 1315.0
+   "precio": 1299.99
   },
   {
    "lista": "nuevos",
-   "modelo": "IPHONE 17 PRO",
+   "modelo": "IPHONE 18 PRO MAX",
    "categoria": "iphone",
-   "color": "SILVER",
+   "color": "GLACIER",
    "capacidad": "256GB",
    "bateria": 100,
    "sim": "eSIM",
-   "precio": 1329.99
+   "precio": 1609.99
   },
   {
    "lista": "nuevos",
-   "modelo": "IPHONE 17 PRO MAX",
+   "modelo": "IPHONE DUO",
    "categoria": "iphone",
-   "color": "COSMIC ORANGE",
-   "capacidad": "256GB",
+   "color": "NIGHT SKY",
+   "capacidad": "512GB",
    "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1369.99
+   "sim": "",
+   "precio": 2799.99
   },
   {
    "lista": "nuevos",
-   "modelo": "IPHONE 17 PRO MAX",
-   "categoria": "iphone",
+   "modelo": "XIAOMI 17T 12RAM",
+   "categoria": "android",
+   "color": "BLACK",
+   "capacidad": "512GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 569.99
+  },
+  {
+   "lista": "nuevos",
+   "modelo": "XIAOMI 17T 12RAM",
+   "categoria": "android",
+   "color": "OPAL WHITE",
+   "capacidad": "512GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 569.99
+  },
+  {
+   "lista": "nuevos",
+   "modelo": "XIAOMI 17T 12RAM",
+   "categoria": "android",
+   "color": "VIOLET",
+   "capacidad": "512GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 569.99
+  },
+  {
+   "lista": "nuevos",
+   "modelo": "XIAOMI 17T PRO 12RAM",
+   "categoria": "android",
    "color": "DEEP BLUE",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1369.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 17 PRO MAX",
-   "categoria": "iphone",
-   "color": "SILVER",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1369.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 17E",
-   "categoria": "iphone",
-   "color": "BLACK",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 769.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 18 PRO MAX",
-   "categoria": "iphone",
-   "color": "BLACK",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1659.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 18 PRO MAX",
-   "categoria": "iphone",
-   "color": "BURGUNDY",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1709.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 18 PRO MAX",
-   "categoria": "iphone",
-   "color": "SILVER",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1649.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "IPHONE 18 PRO MAX",
-   "categoria": "iphone",
-   "color": "BURGUNDY",
-   "capacidad": "512GB",
-   "bateria": 100,
-   "sim": "eSIM",
-   "precio": 1979.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "SAMSUNG GALAXY S25 ULTRA",
-   "categoria": "android",
-   "color": "TITANIUM BLACK",
    "capacidad": "512GB",
    "bateria": 100,
    "sim": "",
-   "precio": 899.99
+   "precio": 715.0
   },
   {
    "lista": "nuevos",
-   "modelo": "SAMSUNG GALAXY S25 ULTRA",
+   "modelo": "XIAOMI 17T PRO 12RAM",
    "categoria": "android",
-   "color": "TITANIUM WHITESILVER",
+   "color": "DEEP VIOLET",
    "capacidad": "512GB",
    "bateria": 100,
    "sim": "",
-   "precio": 899.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "SAMSUNG GALAXY S26 ULTRA",
-   "categoria": "android",
-   "color": "COBALT VIOLET",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "",
-   "precio": 959.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "SAMSUNG GALAXY S26 ULTRA",
-   "categoria": "android",
-   "color": "SKY BLUE",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "",
-   "precio": 959.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "SAMSUNG GALAXY S26 ULTRA",
-   "categoria": "android",
-   "color": "BLACK",
-   "capacidad": "512GB",
-   "bateria": 100,
-   "sim": "",
-   "precio": 1109.99
-  },
-  {
-   "lista": "nuevos",
-   "modelo": "SAMSUNG GALAXY S26 ULTRA",
-   "categoria": "android",
-   "color": "SKY BLUE",
-   "capacidad": "512GB",
-   "bateria": 100,
-   "sim": "",
-   "precio": 1109.99
+   "precio": 715.0
   },
   {
    "lista": "nuevos",
@@ -749,6 +569,46 @@
    "bateria": 100,
    "sim": "",
    "precio": 195.0
+  },
+  {
+   "lista": "nuevos",
+   "modelo": "XIAOMI REDMI NOTE 17 PRO 8GB RAM",
+   "categoria": "android",
+   "color": "BLACK",
+   "capacidad": "512GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 410.0
+  },
+  {
+   "lista": "nuevos",
+   "modelo": "XIAOMI REDMI NOTE 17 PRO 8GB RAM",
+   "categoria": "android",
+   "color": "PURPLE",
+   "capacidad": "512GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 410.0
+  },
+  {
+   "lista": "nuevos",
+   "modelo": "XIAOMI REDMI NOTE 17 PRO 8GB RAM",
+   "categoria": "android",
+   "color": "SKY BLUE",
+   "capacidad": "512GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 410.0
+  },
+  {
+   "lista": "nuevos",
+   "modelo": "XIAOMI REDMI NOTE 17 PRO MAX 8GB RAM",
+   "categoria": "android",
+   "color": "BLACK",
+   "capacidad": "512GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 489.99
   },
   {
    "lista": "nuevos",
@@ -792,29 +652,19 @@
   },
   {
    "lista": "gadgets",
-   "modelo": "APPLE WATCH S12 42MM",
+   "modelo": "AIRPODS PRO 3 GEN",
    "categoria": "otros",
-   "color": "BLACK",
-   "capacidad": "32GB",
+   "color": "WHITE",
+   "capacidad": "",
    "bateria": 100,
    "sim": "",
-   "precio": 435.0
-  },
-  {
-   "lista": "gadgets",
-   "modelo": "APPLE WATCH S12 42MM",
-   "categoria": "otros",
-   "color": "LIGHT GOLD",
-   "capacidad": "32GB",
-   "bateria": 100,
-   "sim": "",
-   "precio": 435.0
+   "precio": 255.0
   },
   {
    "lista": "gadgets",
    "modelo": "APPLE WATCH S12 46MM",
    "categoria": "otros",
-   "color": "LIGHT GOLD",
+   "color": "SPACE GRAY",
    "capacidad": "32GB",
    "bateria": 100,
    "sim": "",
@@ -822,43 +672,33 @@
   },
   {
    "lista": "gadgets",
+   "modelo": "APPLE WATCH SE 3 40MM",
+   "categoria": "otros",
+   "color": "STARLIGHT",
+   "capacidad": "32GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 279.99
+  },
+  {
+   "lista": "gadgets",
+   "modelo": "APPLE WATCH SE 3 44MM",
+   "categoria": "otros",
+   "color": "MIDNIGHT",
+   "capacidad": "32GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 305.0
+  },
+  {
+   "lista": "gadgets",
    "modelo": "APPLE WATCH ULTRA 4 49MM",
    "categoria": "otros",
-   "color": "BLACK TITANIUM",
+   "color": "NATURAL TITANIUM",
    "capacidad": "64GB",
    "bateria": 100,
    "sim": "",
    "precio": 849.0
-  },
-  {
-   "lista": "gadgets",
-   "modelo": "DUALSENSE PS5 BLACK V2",
-   "categoria": "palancas",
-   "color": "",
-   "capacidad": "",
-   "bateria": null,
-   "sim": "",
-   "precio": 89.99
-  },
-  {
-   "lista": "gadgets",
-   "modelo": "DUALSENSE PS5 CAMUFLAJE",
-   "categoria": "palancas",
-   "color": "",
-   "capacidad": "",
-   "bateria": null,
-   "sim": "",
-   "precio": 89.99
-  },
-  {
-   "lista": "gadgets",
-   "modelo": "DUALSENSE PS5 WHITE",
-   "categoria": "palancas",
-   "color": "",
-   "capacidad": "",
-   "bateria": null,
-   "sim": "",
-   "precio": 89.99
   },
   {
    "lista": "gadgets",
@@ -892,13 +732,23 @@
   },
   {
    "lista": "gadgets",
-   "modelo": "MACBOOK AIR M5 13\"",
-   "categoria": "macbook",
-   "color": "MIDNIGHT",
-   "capacidad": "512GB",
+   "modelo": "IPAD AIR M4 11\"",
+   "categoria": "ipad",
+   "color": "BLUE",
+   "capacidad": "128GB",
    "bateria": 100,
    "sim": "",
-   "precio": 1529.99
+   "precio": 869.99
+  },
+  {
+   "lista": "gadgets",
+   "modelo": "IPAD PRO M5 13\"",
+   "categoria": "ipad",
+   "color": "SPACE BLACK",
+   "capacidad": "256GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 1549.99
   },
   {
    "lista": "gadgets",
@@ -919,26 +769,6 @@
    "bateria": 100,
    "sim": "",
    "precio": 1529.99
-  },
-  {
-   "lista": "gadgets",
-   "modelo": "MACBOOK NEO",
-   "categoria": "macbook",
-   "color": "BLUSH",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "",
-   "precio": 919.99
-  },
-  {
-   "lista": "gadgets",
-   "modelo": "MACBOOK NEO",
-   "categoria": "macbook",
-   "color": "INDIGO",
-   "capacidad": "256GB",
-   "bateria": 100,
-   "sim": "",
-   "precio": 919.99
   },
   {
    "lista": "gadgets",
@@ -979,193 +809,195 @@
    "bateria": null,
    "sim": "",
    "precio": 45.0
+  },
+  {
+   "lista": "gadgets",
+   "modelo": "REDMI PAD 2 8GB RAM",
+   "categoria": "android",
+   "color": "GRAPHITE GRAY",
+   "capacidad": "256GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 275.0
+  },
+  {
+   "lista": "gadgets",
+   "modelo": "REDMI PAD 2 8GB RAM",
+   "categoria": "android",
+   "color": "LAVENDER PURPLE",
+   "capacidad": "256GB",
+   "bateria": 100,
+   "sim": "",
+   "precio": 275.0
   }
  ],
- "actualizado": "2026-10-24T23:58:34+00:00",
- "revisado": "2026-10-24T23:58:34+00:00",
- "noticias": {
-  "titulo": "DISPONIBLES ENTREGA INMEDIATA",
-  "items": [
-   "IPHONE 18 PROMAX 256GB | BURGUNDY | SILVER | BLACK",
-   "IPHONE 18 PROMAX 512GB | BURGUNDY"
-  ]
- },
+ "actualizado": "2026-11-16T06:01:29+00:00",
+ "revisado": "2026-11-16T06:01:29+00:00",
+ "noticias": null,
  "ingresos": [
   {
-   "clave": "openbox|IPHONE 14|PURPLE|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 14|MIDNIGHT|128GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 14|RED|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 14|STARLIGHT|128GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15|BLUE|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 14 PRO|SPACE BLACK|128GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15|BLACK|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 14 PRO|DEEP PURPLE|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PLUS|PINK|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 14 PRO|SPACE BLACK|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PRO|BLACK TITANIUM|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 14 PRO MAX|DEEP PURPLE|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PRO|BLUE TITANIUM|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 15|BLACK|128GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PRO|NATURAL TITANIUM|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 15 PRO|NATURAL TITANIUM|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PRO|WHITE TITANIUM|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 16|PINK|128GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PRO|BLACK TITANIUM|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 16 PRO|BLACK TITANIUM|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PRO|BLUE TITANIUM|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 16 PRO|WHITE TITANIUM|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PRO|NATURAL TITANIUM|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 16 PRO|BLACK TITANIUM|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PRO|WHITE TITANIUM|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 16 PRO|WHITE TITANIUM|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 15 PRO|BLUE TITANIUM|512GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 17 AIR|LIGHT GOLD|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 16|ULTRAMARINE|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 17 AIR|SPACE BLACK|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 16 PLUS|PINK|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 17|LAVENDER|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 16 PLUS|TEAL|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 17|MIST BLUE|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 16 PRO|DESERT TITANIUM|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "openbox|IPHONE 17 PRO|SILVER|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 16 PRO MAX|WHITE TITANIUM|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|IPHONE 16|BLACK|128GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 16E|BLACK|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|IPHONE 16|ULTRAMARINE|128GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 16E|WHITE|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|IPHONE 16|WHITE|128GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 17|BLACK|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|IPHONE 18 PRO MAX|GLACIER|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 17|SAGE|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|IPHONE DUO|NIGHT SKY|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|IPHONE 17 PRO|SILVER|512GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|XIAOMI 17T 12RAM|BLACK|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|SAMSUNG GALAXY S23 ULTRA|GREEN|512GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|XIAOMI 17T 12RAM|OPAL WHITE|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|SAMSUNG GALAXY S23 ULTRA|LAVENDER|512GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|XIAOMI 17T 12RAM|VIOLET|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "openbox|SAMSUNG GALAXY S23 ULTRA|PHANTOM BLACK|512GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|XIAOMI 17T PRO 12RAM|DEEP BLUE|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "nuevos|IPHONE 16 ACTIVADO|BLACK|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|XIAOMI 17T PRO 12RAM|DEEP VIOLET|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "nuevos|IPHONE 16 ACTIVADO|TEAL|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|XIAOMI REDMI NOTE 17 PRO 8GB RAM|BLACK|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "nuevos|IPHONE 17 PRO|COSMIC ORANGE|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|XIAOMI REDMI NOTE 17 PRO 8GB RAM|PURPLE|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "nuevos|IPHONE 17E|BLACK|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|XIAOMI REDMI NOTE 17 PRO 8GB RAM|SKY BLUE|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "nuevos|IPHONE 18 PRO MAX|BURGUNDY|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "nuevos|XIAOMI REDMI NOTE 17 PRO MAX 8GB RAM|BLACK|512GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "nuevos|IPHONE 18 PRO MAX|SILVER|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "gadgets|AIRPODS PRO 3 GEN|WHITE|",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "gadgets|APPLE WATCH S12 42MM|BLACK|32GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "gadgets|APPLE WATCH S12 46MM|SPACE GRAY|32GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "gadgets|DUALSENSE PS5 WHITE||",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "gadgets|APPLE WATCH SE 3 40MM|STARLIGHT|32GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "gadgets|IPAD A16 11VA GEN 11\"|BLUE|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "gadgets|APPLE WATCH SE 3 44MM|MIDNIGHT|32GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "gadgets|IPAD A16 11VA GEN 11\"|SILVER|128GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "gadgets|APPLE WATCH ULTRA 4 49MM|NATURAL TITANIUM|64GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "gadgets|MACBOOK AIR M5 13\"|MIDNIGHT|512GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "gadgets|IPAD AIR M4 11\"|BLUE|128GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "gadgets|MACBOOK AIR M5 13\"|SILVER|512GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "gadgets|IPAD PRO M5 13\"|SPACE BLACK|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "gadgets|MACBOOK NEO|BLUSH|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "gadgets|REDMI PAD 2 8GB RAM|GRAPHITE GRAY|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   },
   {
-   "clave": "gadgets|MACBOOK NEO|INDIGO|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
-  },
-  {
-   "clave": "gadgets|MACBOOK NEO|SILVER|256GB",
-   "desde": "2026-10-24T22:00:04+00:00"
-  },
-  {
-   "clave": "gadgets|MACBOOK NEO|BLUSH|512GB",
-   "desde": "2026-10-24T22:00:04+00:00"
-  },
-  {
-   "clave": "gadgets|MACBOOK NEO|INDIGO|512GB",
-   "desde": "2026-10-24T22:00:04+00:00"
+   "clave": "gadgets|REDMI PAD 2 8GB RAM|LAVENDER PURPLE|256GB",
+   "desde": "2026-11-16T06:01:29+00:00"
   }
  ]
 }
