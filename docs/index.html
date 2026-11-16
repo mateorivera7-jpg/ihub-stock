@@ -228,6 +228,8 @@ dialog.acceso::backdrop { background: rgba(6,14,28,.6); backdrop-filter: blur(3p
 .acc-msg { font-size: 13.5px; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--warn) 12%, transparent); color: var(--warn); }
 .acc-msg.ok { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good); }
 .acc-note { font-size: 12px; color: var(--muted); margin: 0; }
+.linkish { border: 0; background: none; color: var(--brand); font-weight: 700; font-size: 13.5px; cursor: pointer; padding: 2px 0; text-align: left; }
+#re-listo .btn { justify-content: center; }
 
 footer { background: linear-gradient(135deg, #0A4FD6, #0838A3); color: #E3F0FD; padding: 24px 16px 34px; font-size: 13px; }
 footer .wrap { display: grid; gap: 14px; }
@@ -271,31 +273,51 @@ footer a { color: #fff; font-weight: 600; }
 <dialog class="acceso" id="acceso" aria-labelledby="acc-titulo">
   <div class="acc-head">
     <h2 id="acc-titulo">Acceso mayoristas</h2>
-    <p>Regístrate para ver todo el stock con precio por mayor.</p>
+    <p>Mismo stock en tiempo real, con precio por mayor. Solicita tu acceso y te enviamos tu clave.</p>
     <button class="acc-close" type="button" id="acc-cerrar" aria-label="Cerrar">×</button>
   </div>
   <div class="acc-tabs" role="tablist">
     <button type="button" role="tab" id="tab-ingresar" aria-selected="true">Ingresar</button>
-    <button type="button" role="tab" id="tab-registro" aria-selected="false">Registrarme</button>
+    <button type="button" role="tab" id="tab-registro" aria-selected="false">Solicitar acceso</button>
   </div>
+
   <form class="acc-form" id="form-ingresar" novalidate>
     <label>Celular<input id="in-cel" type="tel" inputmode="tel" autocomplete="username" placeholder="09XXXXXXXX" required></label>
-    <label>Clave<input id="in-clave" type="password" autocomplete="current-password" required></label>
+    <label>Clave que te dio iHub<input id="in-clave" type="password" autocomplete="current-password" required></label>
     <div class="acc-msg" id="in-msg" hidden></div>
     <button class="submit" type="submit">Ver precios por mayor</button>
-    <p class="acc-note">¿Olvidaste tu clave? Escríbenos al WhatsApp 0962 608 262.</p>
+    <button class="linkish" type="button" id="ir-correo" hidden>Prefiero recibir un código en mi correo</button>
+    <p class="acc-note">¿No tienes clave u olvidaste la tuya? Escríbenos al WhatsApp 0962 608 262.</p>
   </form>
+
+  <form class="acc-form" id="form-correo" novalidate hidden>
+    <label>Correo registrado<input id="co-correo" type="email" autocomplete="email" placeholder="tu@correo.com" required></label>
+    <label id="co-codigo-l" hidden>Código que te llegó al correo<input id="co-codigo" inputmode="numeric" autocomplete="one-time-code" maxlength="10"></label>
+    <div class="acc-msg" id="co-msg" hidden></div>
+    <button class="submit" type="submit" id="co-btn">Enviarme el código</button>
+    <button class="linkish" type="button" id="ir-clave">Volver a ingresar con clave</button>
+  </form>
+
   <form class="acc-form" id="form-registro" novalidate hidden>
     <div class="two">
       <label>Nombre<input id="re-nombre" autocomplete="given-name" required></label>
       <label>Apellido<input id="re-apellido" autocomplete="family-name" required></label>
     </div>
     <label>Celular (será tu usuario)<input id="re-cel" type="tel" inputmode="tel" autocomplete="tel" placeholder="09XXXXXXXX" required></label>
-    <label>Crea una clave (mínimo 6 caracteres)<input id="re-clave" type="password" autocomplete="new-password" minlength="6" required></label>
-    <label>Repite la clave<input id="re-clave2" type="password" autocomplete="new-password" minlength="6" required></label>
+    <label>Correo<input id="re-correo" type="email" inputmode="email" autocomplete="email" placeholder="tu@correo.com"></label>
+    <div class="two">
+      <label>Negocio<input id="re-negocio" autocomplete="organization" placeholder="Opcional"></label>
+      <label>Ciudad<input id="re-ciudad" autocomplete="address-level2"></label>
+    </div>
     <div class="acc-msg" id="re-msg" hidden></div>
-    <button class="submit" type="submit">Crear mi cuenta mayorista</button>
+    <button class="submit" type="submit">Enviar solicitud</button>
   </form>
+
+  <div class="acc-form" id="re-listo" hidden>
+    <div class="acc-msg ok">Recibimos tu solicitud. Cuando te aprobemos te enviaremos tu clave por WhatsApp o correo.</div>
+    <a class="btn wa" id="re-avisar" target="_blank" rel="noopener" href="#"></a>
+    <button class="linkish" type="button" id="re-ya-tengo">Ya tengo mi clave</button>
+  </div>
 </dialog>
 
 <section class="hero" id="hero" hidden>
@@ -628,52 +650,49 @@ function verRecienLlegados() {
 $("bell").addEventListener("click", verRecienLlegados);
 $("news-ver").addEventListener("click", verRecienLlegados);
 
-/* ---------- Mayoristas (Supabase Auth) ---------- */
-const AUTH = `${SUPABASE_URL}/auth/v1`;
-const CLAVE_SESION = "ihub-mayorista";
-let SESION = null, MAYOR = null;
-try { SESION = JSON.parse(localStorage.getItem(CLAVE_SESION)); } catch {}
-const guardarSesion = s => { SESION = s; try { s ? localStorage.setItem(CLAVE_SESION, JSON.stringify(s)) : localStorage.removeItem(CLAVE_SESION); } catch {} };
+/* ---------- Mayoristas: solicitud, aprobación de iHub y clave ---------- */
+const CODIGO_CORREO = false;   // true cuando Supabase tenga configurado el envío de correos (SMTP)
+const CLAVE_SESION = "ihub-mayorista-v2";
+let TOKEN = null, MAYOR = null;
+try { TOKEN = localStorage.getItem(CLAVE_SESION); localStorage.removeItem("ihub-mayorista"); } catch {}
+const guardarToken = t => { TOKEN = t; try { t ? localStorage.setItem(CLAVE_SESION, t) : localStorage.removeItem(CLAVE_SESION); } catch {} };
 const normCelular = v => { let d = String(v).replace(/\D/g, ""); if (d.startsWith("593")) d = d.slice(3); if (d.startsWith("0")) d = d.slice(1); return d.length === 9 ? "593" + d : null; };
-const correoDe = cel => `${cel}@mayoristas.ihub.com.ec`;
-const ERRORES = {
-  user_already_exists: "Ese celular ya está registrado. Ingresa con tu clave en la pestaña Ingresar.",
-  invalid_credentials: "Celular o clave incorrectos.",
-  weak_password: "La clave es muy corta: usa al menos 6 caracteres.",
-  email_not_confirmed: "Tu cuenta aún no está activa. Escríbenos por WhatsApp para activarla.",
-  signup_disabled: "Los registros están cerrados por ahora. Escríbenos por WhatsApp.",
-  over_request_rate_limit: "Demasiados intentos. Espera un minuto y vuelve a intentar.",
-};
-async function authPost(ruta, cuerpo, token) {
+async function rpc(fn, args, token) {
   const h = { apikey: SUPABASE_KEY, "Content-Type": "application/json" };
   if (token) h.Authorization = "Bearer " + token;
-  const r = await fetch(AUTH + ruta, { method: "POST", headers: h, body: JSON.stringify(cuerpo) });
-  const j = await r.json().catch(() => ({}));
-  if (!r.ok) { const e = new Error(j.msg || j.error_description || r.status); e.code = j.error_code || j.error; throw e; }
-  return j;
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, { method: "POST", headers: h, body: JSON.stringify(args || {}) });
+  if (!r.ok) throw Object.assign(new Error("rpc " + r.status), { status: r.status });
+  return r.status === 204 ? null : r.json();
 }
-const mensajeError = e => ERRORES[e.code] || (/already registered/i.test(e.message) ? ERRORES.user_already_exists
-  : /invalid login/i.test(e.message) ? ERRORES.invalid_credentials : "No se pudo conectar. Revisa tu internet e intenta otra vez.");
-function tomarSesion(j) {
-  if (!j.access_token) return false;
-  guardarSesion({ access_token: j.access_token, refresh_token: j.refresh_token,
-    expires_at: j.expires_at || Math.floor(Date.now() / 1000) + (j.expires_in || 3600), meta: j.user?.user_metadata || {} });
-  return true;
-}
-async function tokenVigente() {
-  if (!SESION) return null;
-  if (SESION.expires_at * 1000 - 60000 > Date.now()) return SESION.access_token;
-  try { tomarSesion({ ...(await authPost("/token?grant_type=refresh_token", { refresh_token: SESION.refresh_token })), user: { user_metadata: SESION.meta } }); return SESION.access_token; }
-  catch { guardarSesion(null); return null; }
+const MENSAJES = {
+  no_registrado: "Ese celular no tiene solicitud. Toca «Solicitar acceso».",
+  pendiente: "Tu solicitud está en revisión. Te enviaremos tu clave por WhatsApp o correo.",
+  bloqueado: "Tu acceso mayorista no está activo. Escríbenos por WhatsApp.",
+  demasiados_intentos: "Demasiados intentos con clave equivocada. Escríbenos por WhatsApp para reactivarte.",
+  clave: "La clave no es correcta. Revisa el mensaje donde te la enviamos.",
+  correo_no_aprobado: "Ese correo no corresponde a un mayorista aprobado.",
+  celular_invalido: "Escribe tu celular de 10 dígitos, por ejemplo 0991234567.",
+  faltan_datos: "Escribe tu nombre y tu apellido.",
+  ya_aprobado: "Ese celular ya está aprobado: entra con tu clave en la pestaña Ingresar.",
+};
+const falla = t => Object.assign(new Error(t), { amigable: t });
+const sinConexion = "No se pudo conectar con el sistema de mayoristas. Revisa tu internet e intenta otra vez.";
+
+// Precio por mayor = precio público − descuento de su categoría (los descuentos solo llegan con sesión válida).
+function aplicarMayor(productos, descuentos) {
+  const chips = productos.filter(p => p.categoria === "macbook").map(p => +(p.modelo.match(/\bM(\d+)\b/) || [])[1]).filter(Boolean);
+  const ultimo = chips.length ? Math.max(...chips) : null;
+  return productos.map(p => {
+    let cat = p.categoria;
+    if (cat === "macbook") { const c = +(p.modelo.match(/\bM(\d+)\b/) || [])[1]; cat = c && ultimo && c >= ultimo ? "macbook_ultima_generacion" : "macbook_anterior"; }
+    const d = Number(descuentos?.[cat]) || 0;
+    return { ...p, precio: Math.max(0, Math.round((p.precio - d) * 100) / 100), _publico: p.precio };
+  });
 }
 async function leerMayorista() {
-  const token = await tokenVigente();
-  if (!token) return null;
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/productos_mayorista?select=lista,modelo,categoria,color,capacidad,bateria,sim,precio&order=orden`,
-    { headers: { apikey: SUPABASE_KEY, Authorization: "Bearer " + token }, cache: "no-store" });
-  if (r.status === 401) { guardarSesion(null); return null; }
-  if (!r.ok) throw new Error(r.status);
-  return (await r.json()).map(p => ({ ...p, precio: Number(p.precio) }));
+  if (!TOKEN) return null;
+  try { return await rpc("datos_mayorista", { p_token: TOKEN }); }
+  catch { return undefined; }   // sin conexión: no cerramos la sesión
 }
 function pintarModo() {
   $("modo-mayor").hidden = !MAYOR;
@@ -681,48 +700,85 @@ function pintarModo() {
   $("acc-btn").textContent = MAYOR ? `Mayorista · ${MAYOR.nombre || "mi cuenta"}` : "Mayoristas";
   if (MAYOR) $("mayor-hola").textContent = `Hola, ${MAYOR.nombre} ${MAYOR.apellido}. Estás viendo el stock con precio por mayor.`;
 }
-function verTab(cual) {
-  const reg = cual === "registro";
-  $("form-registro").hidden = !reg; $("form-ingresar").hidden = reg;
+function verPanel(cual) {
+  for (const id of ["form-ingresar", "form-correo", "form-registro", "re-listo"]) $(id).hidden = id !== cual;
+  const reg = cual === "form-registro" || cual === "re-listo";
   $("tab-registro").setAttribute("aria-selected", reg); $("tab-ingresar").setAttribute("aria-selected", !reg);
 }
 function aviso(id, texto, ok) { const el = $(id); el.textContent = texto; el.hidden = !texto; el.classList.toggle("ok", !!ok); }
-$("acc-btn").addEventListener("click", () => { if (MAYOR) { $("modo-mayor").scrollIntoView({ behavior: "smooth" }); return; } verTab("ingresar"); $("acceso").showModal(); });
+$("ir-correo").hidden = !CODIGO_CORREO;
+$("acc-btn").addEventListener("click", () => { if (MAYOR) { $("modo-mayor").scrollIntoView({ behavior: "smooth" }); return; } verPanel("form-ingresar"); $("acceso").showModal(); });
 $("acc-cerrar").addEventListener("click", () => $("acceso").close());
-$("tab-ingresar").addEventListener("click", () => verTab("ingresar"));
-$("tab-registro").addEventListener("click", () => verTab("registro"));
+$("tab-ingresar").addEventListener("click", () => verPanel("form-ingresar"));
+$("tab-registro").addEventListener("click", () => verPanel("form-registro"));
+$("ir-correo").addEventListener("click", () => verPanel("form-correo"));
+$("ir-clave").addEventListener("click", () => verPanel("form-ingresar"));
+$("re-ya-tengo").addEventListener("click", () => verPanel("form-ingresar"));
 $("salir").addEventListener("click", () => {
-  if (SESION) authPost("/logout", {}, SESION.access_token).catch(() => {});
-  guardarSesion(null); MAYOR = null; cargar();
+  if (TOKEN) rpc("salir_mayorista", { p_token: TOKEN }).catch(() => {});
+  guardarToken(null); MAYOR = null; cargar();
 });
 async function enviar(form, msgId, accion) {
   const btn = form.querySelector(".submit"); aviso(msgId, "");
   btn.disabled = true;
-  try { await accion(); $("acceso").close(); form.reset(); await cargar(); }
-  catch (e) { aviso(msgId, e.amigable || mensajeError(e)); }
+  try { await accion(); }
+  catch (e) { aviso(msgId, e.amigable || sinConexion); }
   finally { btn.disabled = false; }
+}
+async function entrarCon(respuesta) {
+  if (!respuesta?.token) throw falla(MENSAJES[respuesta?.error] || sinConexion);
+  guardarToken(respuesta.token);
+  $("acceso").close();
+  await cargar();
 }
 $("form-ingresar").addEventListener("submit", e => {
   e.preventDefault();
   enviar(e.target, "in-msg", async () => {
     const cel = normCelular($("in-cel").value);
-    if (!cel) throw Object.assign(new Error(), { amigable: "Escribe tu celular de 10 dígitos, por ejemplo 0991234567." });
-    if (!$("in-clave").value) throw Object.assign(new Error(), { amigable: "Escribe tu clave." });
-    tomarSesion(await authPost("/token?grant_type=password", { email: correoDe(cel), password: $("in-clave").value }));
+    if (!cel) throw falla(MENSAJES.celular_invalido);
+    if (!$("in-clave").value) throw falla("Escribe la clave que te enviamos.");
+    await entrarCon(await rpc("acceso_mayorista", { p_celular: cel, p_clave: $("in-clave").value }));
+    e.target.reset();
+  });
+});
+let correoPendiente = null;
+$("form-correo").addEventListener("submit", e => {
+  e.preventDefault();
+  enviar(e.target, "co-msg", async () => {
+    const correo = $("co-correo").value.trim().toLowerCase();
+    if (!/^\S+@\S+\.\S+$/.test(correo)) throw falla("Escribe un correo válido.");
+    const auth = (ruta, cuerpo) => fetch(`${SUPABASE_URL}/auth/v1${ruta}`, { method: "POST",
+      headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" }, body: JSON.stringify(cuerpo) })
+      .then(async r => { const j = await r.json().catch(() => ({})); if (!r.ok) throw falla(r.status === 429 ? "Espera un minuto antes de pedir otro código." : "No se pudo enviar o verificar el código."); return j; });
+    if (correoPendiente !== correo) {
+      await auth("/otp", { email: correo, create_user: true });
+      correoPendiente = correo; $("co-codigo-l").hidden = false; $("co-btn").textContent = "Entrar con el código";
+      aviso("co-msg", "Te enviamos un código. Revisa tu correo (y la carpeta de spam).", true);
+      return;
+    }
+    const s = await auth("/verify", { type: "email", email: correo, token: $("co-codigo").value.trim() });
+    await entrarCon(await rpc("acceso_mayorista_correo", {}, s.access_token));
+    correoPendiente = null; $("co-codigo-l").hidden = true; $("co-btn").textContent = "Enviarme el código"; e.target.reset();
   });
 });
 $("form-registro").addEventListener("submit", e => {
   e.preventDefault();
   enviar(e.target, "re-msg", async () => {
-    const nombre = $("re-nombre").value.trim(), apellido = $("re-apellido").value.trim(), cel = normCelular($("re-cel").value);
-    const clave = $("re-clave").value, clave2 = $("re-clave2").value;
-    const falla = t => Object.assign(new Error(), { amigable: t });
-    if (!nombre || !apellido) throw falla("Escribe tu nombre y tu apellido.");
-    if (!cel) throw falla("Escribe tu celular de 10 dígitos, por ejemplo 0991234567.");
-    if (clave.length < 6) throw falla("La clave debe tener al menos 6 caracteres.");
-    if (clave !== clave2) throw falla("Las dos claves no coinciden.");
-    const j = await authPost("/signup", { email: correoDe(cel), password: clave, data: { nombre, apellido, celular: cel } });
-    if (!tomarSesion(j)) throw falla("Tu cuenta quedó creada pero falta activarla. Escríbenos por WhatsApp al 0962 608 262.");
+    const d = { nombre: $("re-nombre").value.trim(), apellido: $("re-apellido").value.trim(), cel: normCelular($("re-cel").value),
+                correo: $("re-correo").value.trim(), negocio: $("re-negocio").value.trim(), ciudad: $("re-ciudad").value.trim() };
+    if (d.nombre.length < 2 || d.apellido.length < 2) throw falla(MENSAJES.faltan_datos);
+    if (!d.cel) throw falla(MENSAJES.celular_invalido);
+    if (d.correo && !/^\S+@\S+\.\S+$/.test(d.correo)) throw falla("Revisa tu correo: parece incompleto.");
+    const r = await rpc("solicitar_mayorista", { p_nombre: d.nombre, p_apellido: d.apellido, p_celular: d.cel,
+                                                 p_correo: d.correo, p_negocio: d.negocio, p_ciudad: d.ciudad });
+    if (r !== "pendiente") throw falla(MENSAJES[r] || sinConexion);
+    const cel10 = "0" + d.cel.slice(3);
+    $("re-avisar").innerHTML = waIcon + "Avisar a iHub por WhatsApp";
+    $("re-avisar").href = waLink(`Hola iHub, envié mi solicitud de acceso mayorista: ${d.nombre} ${d.apellido}, celular ${cel10}` +
+      `${d.correo ? ", " + d.correo : ""}${d.negocio ? ", negocio " + d.negocio : ""}${d.ciudad ? ", " + d.ciudad : ""}. ¿Me ayudan con mi clave?`);
+    $("in-cel").value = cel10;
+    e.target.reset();
+    verPanel("re-listo");
   });
 });
 
@@ -730,12 +786,10 @@ async function cargar() {
   try {
     const d = await leerDatos();
     MAYOR = null;
-    if (SESION) {
-      try {
-        const lista = await leerMayorista();
-        if (lista && lista.length) { d.productos = lista; MAYOR = { nombre: SESION.meta.nombre || "", apellido: SESION.meta.apellido || "", celular: SESION.meta.celular || "" }; }
-        else if (lista) aviso("in-msg", "Tu acceso mayorista está pausado. Escríbenos por WhatsApp.");
-      } catch {}
+    if (TOKEN) {
+      const m = await leerMayorista();
+      if (m) { d.productos = aplicarMayor(d.productos, m.descuentos); MAYOR = { nombre: m.nombre, apellido: m.apellido, celular: "0" + String(m.celular).slice(3) }; }
+      else if (m === null) guardarToken(null);   // sesión vencida o acceso retirado
     }
     pintarModo();
     const llegados = new Map((d.ingresos || []).map(i => [i.clave, i.desde]));

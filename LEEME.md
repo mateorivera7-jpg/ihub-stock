@@ -70,15 +70,23 @@ GitHub → Settings → Secrets and variables → Actions → **New repository s
 
 ## Mayoristas (precio por mayor)
 
-En la app, el botón **Mayoristas** permite registrarse con nombre, apellido, celular y clave.
-Con la sesión iniciada, la lista muestra el precio por mayor (tabla `productos_mayorista`, que solo ven
-mayoristas registrados y activos; nunca está en el archivo público `catalogo.json`).
+Dentro de la misma app, botón **Mayoristas**:
 
-- **Márgenes por mayor:** filas `mayor_*` de la tabla `margenes` (iPhone, MacBook, iPad, Android, cubos, palancas, otros).
-  El precio por mayor nunca supera al precio público.
-- **Ver quién se registró / bloquear a alguien:** Supabase → Table Editor → `mayoristas` → `activo = false`.
-- **Instalar (una sola vez):** pega `supabase/mayoristas.sql` en SQL Editor → Run, y en
-  Authentication → Sign In / Providers → Email desactiva **Confirm email** (el usuario es el celular, no un correo real).
+1. La persona toca **Solicitar acceso** y deja nombre, apellido, celular, correo, negocio y ciudad
+   (puede avisarte por WhatsApp con un botón). Queda **pendiente** en la tabla `mayoristas` de Supabase.
+2. Tú la apruebas en **Supabase → SQL Editor**:
+   - `select aprobar_mayorista('0991234567');` → te devuelve una **clave de 6 dígitos** para enviársela.
+   - o con tu propia clave: `select aprobar_mayorista('0991234567', 'MiClave2026');`
+   - bloquear: `select bloquear_mayorista('0991234567');`
+3. Entra con **celular + clave** y ve todo el stock en vivo con **precio por mayor** (sesión de 30 días).
+
+- **Precio por mayor** = precio público − descuento de la categoría (tabla `descuentos_mayorista`).
+  Con los márgenes actuales equivale a costo + $40 (iPhone, MacBook, iPad), + $10 (Android) y + $5 (accesorios).
+  Los descuentos solo los recibe un mayorista aprobado con sesión válida.
+- **Ver solicitudes:** Table Editor → `mayoristas` (columna `estado`: pendiente / aprobado / bloqueado).
+- **Código al correo (opcional):** requiere configurar un servicio de correo en Supabase
+  (Authentication → Emails → SMTP, por ejemplo Resend) y poner `CODIGO_CORREO = true` en `docs/index.html`.
+- **Instalar (una sola vez):** pega `supabase/PEGAR-EN-SUPABASE.sql` (privado, con los descuentos reales) en SQL Editor → Run.
 
 ## Cambiar márgenes
 

@@ -8,7 +8,7 @@ Actualiza el catálogo de iHub.
    (la app lee primero de Supabase y usa el JSON como respaldo).
 
 El JSON publicado solo contiene el precio final de iHub (nunca el costo ni el margen).
-El precio POR MAYOR (márgenes mayor_*) se publica solo en la tabla protegida productos_mayorista de Supabase.
+El precio POR MAYOR lo calcula la app con los descuentos de Supabase (solo para mayoristas aprobados; ver supabase/mayoristas.sql).
 
 Uso:  python actualizar.py
 
@@ -34,7 +34,6 @@ if os.environ.get("MARGENES_JSON"):  # en GitHub Actions: secreto con el conteni
 DIAS_NUEVO = 7  # cuántos días un producto recién llegado lleva la etiqueta "Nuevo"
 CATEGORIAS = ("iphone", "macbook_ultima_generacion", "macbook_anterior", "ipad",
               "android", "cubos", "palancas", "otros")
-CATEGORIAS_MAYOR = tuple(f"mayor_{c}" for c in ("iphone", "macbook", "ipad", "android", "cubos", "palancas", "otros"))
 
 MARCAS_ANDROID = (
     "SAMSUNG", "GALAXY", "XIAOMI", "REDMI", "POCO", "ZTE", "NUVIA", "MOTOROLA",
@@ -83,10 +82,6 @@ def margen(modelo, ultimo_chip_mac):
     return MARGENES[cat]
 
 
-def margen_mayor(modelo):
-    return MARGENES[f"mayor_{categoria(modelo)}"]
-
-
 def precio_a_numero(texto):
     return float(re.sub(r"[^\d.]", "", texto) or 0)
 
@@ -111,7 +106,7 @@ def nombre_bonito(modelo):
     return re.sub(r"\s+", " ", t).strip()
 
 
-def armar_producto(lista, modelo, detalle, precio_txt, ultimo_chip_mac, por_mayor=False):
+def armar_producto(lista, modelo, detalle, precio_txt, ultimo_chip_mac):
     partes = [p.strip() for p in detalle.split("·")]
     color = partes[0] if partes else ""
     capacidad = partes[1] if len(partes) > 1 else ""
@@ -124,7 +119,7 @@ def armar_producto(lista, modelo, detalle, precio_txt, ultimo_chip_mac, por_mayo
     sim = "eSIM" if "ESIM" in modelo.upper() else ("Chip físico" if "CHIP" in modelo.upper() else "")
 
     base = precio_a_numero(precio_txt)
-    final = round(base + (margen_mayor(modelo) if por_mayor else margen(modelo, ultimo_chip_mac)), 2)
+    final = round(base + margen(modelo, ultimo_chip_mac), 2)
     tipo = tipo_lista(lista)
     return {
         "lista": tipo,
@@ -160,9 +155,6 @@ def margenes_de_supabase():
         nuevos = {f["categoria"]: float(f["monto"]) for f in filas}
         if all(k in nuevos for k in CATEGORIAS):
             print("Márgenes leídos de Supabase.")
-            for k in CATEGORIAS_MAYOR:  # si faltan en Supabase, se usan los de margenes.json
-                if k not in nuevos and k in MARGENES:
-                    nuevos[k] = MARGENES[k]
             return nuevos
         print("A la tabla margenes le faltan categorías; uso margenes.json.")
     except Exception as e:
@@ -310,16 +302,6 @@ def main():
     if SUPABASE_URL and SUPABASE_KEY:
         r = supabase("rpc/publicar_catalogo", {"productos": productos, "revisado": ahora})
         print("Supabase:", r)
-        if all(MARGENES.get(k) for k in CATEGORIAS_MAYOR):
-            mayor = [armar_producto(l, m, d, pr, ultimo_chip, por_mayor=True) for l, m, d, pr in crudo]
-            for pm, pp in zip(mayor, productos):  # el precio por mayor nunca supera al público
-                pm["precio"] = min(pm["precio"], pp["precio"])
-            try:
-                print("Supabase:", supabase("rpc/publicar_mayorista", {"productos": mayor}))
-            except Exception as e:
-                print("No se pudo publicar el stock mayorista (¿falta correr supabase/mayoristas.sql?):", e)
-        else:
-            print("Faltan los márgenes mayor_* en la tabla margenes; no se publica el stock mayorista.")
 
 
 if __name__ == "__main__":
